@@ -4,5 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Consumption" Version="3.0.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ARMClient.Authentication">
+      <HintPath>lib\ARMClient.Authentication.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 </Project>
