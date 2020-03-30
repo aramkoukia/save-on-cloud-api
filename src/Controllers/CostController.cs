@@ -22,30 +22,55 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public IEnumerable<ChartModel> GetCost()
         {
             // Create the consumption client and obtain data for the configured subscription
             var credentials = SdkContext.AzureCredentialsFactory
-                        .FromServicePrincipal(Configuration["clientId"] , Configuration["clientSecret"], Configuration["tenantId"], AzureEnvironment.AzureGlobalCloud);
+                        .FromServicePrincipal(Configuration["clientId"], Configuration["clientSecret"], Configuration["tenantId"], AzureEnvironment.AzureGlobalCloud);
 
-            using (ConsumptionManagementClient consumptionClient = new ConsumptionManagementClient(credentials))
+            using ConsumptionManagementClient consumptionClient = new ConsumptionManagementClient(credentials)
             {
-                consumptionClient.SubscriptionId = Configuration["SubscriptionId"];
+                SubscriptionId = Configuration["SubscriptionId"]
+            };
 
-                //Get usage details and perform some basic processing
-                var result = ProcessUsageDetails(consumptionClient);
-                // GetFullPriceSheet(consumptionClient);
+            //Get usage details and perform some basic processing
+            var result = ProcessUsageDetails(consumptionClient);
+            var data = result.SelectMany(kvp => kvp.Value).Distinct()
+                .GroupBy(l => l.InstanceName)
+                .Select(cl => new ChartModel
+                {
+                    label = cl.First().InstanceName,
+                    value = cl.Sum(c => c.PretaxCost).ToString(),
+                });
 
-                //Sum the cost of one of your resources based on usage detail cost info
-                // SumTotalCostOfAResource();
+            return data;
+        }
 
-                //Get the full price sheet
-                // GetFullPriceSheet(consumptionClient);
+        [HttpGet("detail")]
+        public string GetDetail()
+        {
+            // Create the consumption client and obtain data for the configured subscription
+            var credentials = SdkContext.AzureCredentialsFactory
+                        .FromServicePrincipal(Configuration["clientId"], Configuration["clientSecret"], Configuration["tenantId"], AzureEnvironment.AzureGlobalCloud);
 
-                //Create a new sample budget
-                // CreateTestBudget(consumptionClient);
-                return JsonConvert.SerializeObject(result);
-            }
+            using ConsumptionManagementClient consumptionClient = new ConsumptionManagementClient(credentials)
+            {
+                SubscriptionId = Configuration["SubscriptionId"]
+            };
+
+            //Get usage details and perform some basic processing
+            var result = ProcessUsageDetails(consumptionClient);
+            // GetFullPriceSheet(consumptionClient);
+
+            //Sum the cost of one of your resources based on usage detail cost info
+            // SumTotalCostOfAResource();
+
+            //Get the full price sheet
+            // GetFullPriceSheet(consumptionClient);
+
+            //Create a new sample budget
+            // CreateTestBudget(consumptionClient);
+            return JsonConvert.SerializeObject(result);
         }
 
         /// <summary>
