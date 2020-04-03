@@ -1,8 +1,8 @@
 ﻿namespace SaveOnCloudApi
 {
-    public class ChartModel
+    public class DateValueModel
     {
-        public string label { get; set; }
+        public string date { get; set; }
         public string value { get; set; }
     }
 }

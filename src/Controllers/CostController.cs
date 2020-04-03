@@ -22,7 +22,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ChartModel> GetCost()
+        public IEnumerable<LabelValueModel> GetCost()
         {
             // Create the consumption client and obtain data for the configured subscription
             var credentials = SdkContext.AzureCredentialsFactory
@@ -37,9 +37,34 @@ namespace SaveOnCloudApi.Controllers
             var result = ProcessUsageDetails(consumptionClient);
             var data = result.SelectMany(kvp => kvp.Value).Distinct()
                 .GroupBy(l => l.InstanceName)
-                .Select(cl => new ChartModel
+                .Select(cl => new LabelValueModel
                 {
                     label = cl.First().InstanceName,
+                    value = cl.Sum(c => c.PretaxCost).ToString(),
+                });
+
+            return data;
+        }
+
+        [HttpGet("daily")]
+        public IEnumerable<DateValueModel> GetDailySpending()
+        {
+            // Create the consumption client and obtain data for the configured subscription
+            var credentials = SdkContext.AzureCredentialsFactory
+                        .FromServicePrincipal(Configuration["clientId"], Configuration["clientSecret"], Configuration["tenantId"], AzureEnvironment.AzureGlobalCloud);
+
+            using ConsumptionManagementClient consumptionClient = new ConsumptionManagementClient(credentials)
+            {
+                SubscriptionId = Configuration["SubscriptionId"]
+            };
+
+            //Get usage details and perform some basic processing
+            var result = ProcessUsageDetails(consumptionClient);
+            var data = result.SelectMany(kvp => kvp.Value).Distinct()
+                .GroupBy(l => l.UsageStart.Value.ToShortDateString())
+                .Select(cl => new DateValueModel
+                {
+                    date = cl.First().UsageStart.Value.ToShortDateString(),
                     value = cl.Sum(c => c.PretaxCost).ToString(),
                 });
 
