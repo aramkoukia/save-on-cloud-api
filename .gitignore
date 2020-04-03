@@ -8,3 +8,4 @@ Debug
 Release
 *.pubxml*
 *.csproj.user
+appsettings.json
