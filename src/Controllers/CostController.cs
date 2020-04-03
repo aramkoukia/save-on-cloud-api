@@ -41,7 +41,8 @@ namespace SaveOnCloudApi.Controllers
                 {
                     label = cl.First().InstanceName,
                     value = cl.Sum(c => c.PretaxCost).ToString(),
-                });
+                })
+                .OrderBy(o => o.value);
 
             return data;
         }
@@ -66,7 +67,8 @@ namespace SaveOnCloudApi.Controllers
                 {
                     date = cl.First().UsageStart.Value.ToShortDateString(),
                     value = cl.Sum(c => c.PretaxCost).ToString(),
-                });
+                })
+                .OrderBy(o => o.date);
 
             return data;
         }
