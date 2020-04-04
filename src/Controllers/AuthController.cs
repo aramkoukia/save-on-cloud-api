@@ -16,29 +16,32 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.WebUtilities;
 using SaveOnCloudApi.Models.Auth;
 using System.Text.Encodings.Web;
+using Microsoft.Extensions.Configuration;
 
 namespace SaveOnCloudApi.Controllers
 {
     public class AuthController : Controller
     {
+        public IConfiguration Configuration { get; }
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtOptions _jwtOptions;
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
-
-        public AuthController(
-            UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IOptions<JwtOptions> jwtOptions,
-            ILoggerFactory loggerFactory,
-            IEmailSender emailSender)
+       
+    public AuthController(UserManager<ApplicationUser> userManager,
+                          RoleManager<IdentityRole> roleManager,
+                          IOptions<JwtOptions> jwtOptions,
+                          ILoggerFactory loggerFactory,
+                          IEmailSender emailSender,
+                          IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtOptions = jwtOptions.Value;
             _logger = loggerFactory.CreateLogger<AuthController>();
             _emailSender = emailSender;
+            Configuration = configuration;
         }
 
         [AllowAnonymous]
@@ -125,11 +128,7 @@ namespace SaveOnCloudApi.Controllers
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code },
-                protocol: Request.Scheme);
+            var callbackUrl = $"{Configuration["webAppBaseUrl"]}/Account/ConfirmEmail?userId={user.Id}&code={code}";
 
             _emailSender.SendEmail(
                 model.Email,
@@ -146,5 +145,18 @@ namespace SaveOnCloudApi.Controllers
             return Created("", user.Email);
         }
 
+        [AllowAnonymous]
+        [HttpPost("auth/confirm")]
+        public async Task<IActionResult> ConfirmAsync(EmailConfirmModel model)
+        {
+            var user = new ApplicationUser { Id = model.UserId };
+            var result = await _userManager.ConfirmEmailAsync(user, model.Token);
+
+            _logger.LogInformation($"User email confirm request. Email: {model.UserId}. Status {result.Succeeded}");
+
+            return result.Succeeded ?
+                (IActionResult)Ok() :
+                BadRequest(result.Errors.First().Description);
+        }
     }
 }

@@ -28,17 +28,17 @@ namespace SaveOnCloudApi.Services
                 message.From.Add(new MailboxAddress(settings.FromEmail));
                 message.To.Add(new MailboxAddress(toEmail));
                 message.Subject = subject;
-                var builder = new BodyBuilder
+                var bodyBuilder = new BodyBuilder
                 {
+                    HtmlBody = textMessage,
                     TextBody = textMessage
                 };
+                message.Body = bodyBuilder.ToMessageBody();
 
                 if (!string.IsNullOrEmpty(attachmentName))
                 {
-                    builder.Attachments.Add(attachmentName, attachment);
+                    bodyBuilder.Attachments.Add(attachmentName, attachment);
                 }
-
-                message.Body = builder.ToMessageBody();
 
                 using var client = new MailKit.Net.Smtp.SmtpClient();
                 client.Connect(settings.SmtpHost, settings.SmtpPort, SecureSocketOptions.StartTls);
