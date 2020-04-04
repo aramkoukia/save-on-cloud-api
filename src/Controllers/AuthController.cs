@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using SaveOnCloudApi.Models;
 using SaveOnCloudApi.Services;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.WebUtilities;
+using SaveOnCloudApi.Models.Auth;
+using System.Text.Encodings.Web;
 
 namespace SaveOnCloudApi.Controllers
 {
@@ -22,17 +25,20 @@ namespace SaveOnCloudApi.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtOptions _jwtOptions;
         private readonly ILogger _logger;
+        private readonly IEmailSender _emailSender;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IOptions<JwtOptions> jwtOptions,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtOptions = jwtOptions.Value;
             _logger = loggerFactory.CreateLogger<AuthController>();
+            _emailSender = emailSender;
         }
 
         [AllowAnonymous]
@@ -102,6 +108,39 @@ namespace SaveOnCloudApi.Controllers
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     permissions = permissions.Distinct(),
                 });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("api/auth/register")]
+        public async Task<IActionResult> RegisterAsync(RegistrationModel model)
+        {
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = user.Id, code = code },
+                    protocol: Request.Scheme);
+
+                _emailSender.SendEmail(
+                    model.Email,
+                    "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return BadRequest("Need to confirm your email");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return Created("", null);
         }
     }
 }

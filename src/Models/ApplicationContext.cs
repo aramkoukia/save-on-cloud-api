@@ -1,11 +1,13 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace SaveOnCloudApi.Models
 {
     public partial class ApplicationContext : IdentityDbContext<IdentityUser>
     {
+        public virtual DbSet<Settings> Settings { get; set; }
         //public SaveOnCloudContext()
         //{
         //}
