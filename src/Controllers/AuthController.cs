@@ -42,7 +42,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/auth/login")]
+        [HttpPost("auth/login")]
         [Produces("application/json")]
         public async Task<IActionResult> Login(string username, string password)
         {
@@ -111,7 +111,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/auth/register")]
+        [HttpPost("auth/register")]
         public async Task<IActionResult> RegisterAsync(RegistrationModel model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -125,7 +125,7 @@ namespace SaveOnCloudApi.Controllers
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmail",
                     pageHandler: null,
-                    values: new { area = "Identity", userId = user.Id, code = code },
+                    values: new { area = "Identity", userId = user.Id, code },
                     protocol: Request.Scheme);
 
                 _emailSender.SendEmail(
@@ -138,8 +138,6 @@ namespace SaveOnCloudApi.Controllers
                     return BadRequest("Need to confirm your email");
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return Created("", null);
         }
     }
