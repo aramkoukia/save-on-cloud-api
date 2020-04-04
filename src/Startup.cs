@@ -1,8 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using SaveOnCloudApi.Models;
+using SaveOnCloudApi.Services;
+using System.Text;
 
 namespace SaveOnCloudApi
 {
@@ -19,6 +26,38 @@ namespace SaveOnCloudApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<ApplicationContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+
+            // Configure Entity Framework Identity for Auth
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+
+                config.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration["jwt:issuer"],
+                    ValidAudience = Configuration["jwt:issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]))
+                };
+            });
+
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.Configure<JwtOptions>(Configuration.GetSection("jwt"));
+            services.AddResponseCompression();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +74,11 @@ namespace SaveOnCloudApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {
