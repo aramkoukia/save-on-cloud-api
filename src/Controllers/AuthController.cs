@@ -47,10 +47,10 @@ namespace SaveOnCloudApi.Controllers
         [AllowAnonymous]
         [HttpPost("auth/login")]
         [Produces("application/json")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string email, string password)
         {
             // Ensure the username and password is valid.
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByNameAsync(email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, password))
             {
                 return BadRequest(new
@@ -80,20 +80,19 @@ namespace SaveOnCloudApi.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var roles = await _userManager.GetRolesAsync(user);
-            foreach (var roleName in roles)
-            {
-                var role = await _roleManager.FindByNameAsync(roleName);
-                if (role != null)
-                {
-                    var roleClaims = await _roleManager.GetClaimsAsync(role);
-                    if (roleClaims != null && roleClaims.Any())
-                    {
-                        permissions.AddRange(roleClaims.Select(c => c.Value));
-                    }
-                }
-            }
-
+            //var roles = await _userManager.GetRolesAsync(user);
+            //foreach (var roleName in roles)
+            //{
+            //    var role = await _roleManager.FindByNameAsync(roleName);
+            //    if (role != null)
+            //    {
+            //        var roleClaims = await _roleManager.GetClaimsAsync(role);
+            //        if (roleClaims != null && roleClaims.Any())
+            //        {
+            //            permissions.AddRange(roleClaims.Select(c => c.Value));
+            //        }
+            //    }
+            //}
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
