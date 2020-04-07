@@ -9,6 +9,8 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Azure.Management.Billing" Version="3.0.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Billing.Fluent" Version="1.9.1-beta" />
     <PackageReference Include="Microsoft.Azure.Management.Consumption" Version="3.0.2" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.32.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
@@ -22,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\Aws\" />
     <Folder Include="Models\Azure\" />
     <Folder Include="Models\Aws\" />
   </ItemGroup>
