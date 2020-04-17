@@ -1,4 +1,4 @@
-﻿namespace SaveOnCloudApi
+﻿namespace SaveOnCloud.Web
 {
     public class DateValueModel
     {

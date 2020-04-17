@@ -9,7 +9,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Newtonsoft.Json;
 
-namespace SaveOnCloudApi.Controllers.Azure
+namespace SaveOnCloud.Web.Controllers.Azure
 {
     [Route("azure/[controller]")]
     public class CostController : Controller

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 
-namespace SaveOnCloudApi.Controllers
+namespace SaveOnCloud.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

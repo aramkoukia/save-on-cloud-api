@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SaveOnCloudApi.Models;
-using SaveOnCloudApi.Models.Azure;
+using SaveOnCloud.Web.Models;
+using SaveOnCloud.Web.Models.Azure;
 
-namespace SaveOnCloudApi.Controllers.Azure
+namespace SaveOnCloud.Web.Controllers.Azure
 {
 
     [Route("[controller]")]

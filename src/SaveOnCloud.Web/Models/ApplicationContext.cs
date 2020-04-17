@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SaveOnCloudApi.Models
+namespace SaveOnCloud.Web.Models
 {
     public partial class ApplicationContext : IdentityDbContext<ApplicationUser>
     {

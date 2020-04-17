@@ -29,4 +29,8 @@
     <Folder Include="Controllers\Aws\" />
     <Folder Include="Models\Aws\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SaveOnCloud.Core\SaveOnCloud.Core.csproj" />
+  </ItemGroup>
 </Project>

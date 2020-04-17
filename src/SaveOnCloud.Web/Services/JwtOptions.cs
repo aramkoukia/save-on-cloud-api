@@ -1,4 +1,4 @@
-﻿namespace SaveOnCloudApi.Services
+﻿namespace SaveOnCloud.Web.Services
 {
     public class JwtOptions
     {

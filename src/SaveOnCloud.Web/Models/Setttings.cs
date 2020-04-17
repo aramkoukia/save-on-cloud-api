@@ -1,4 +1,4 @@
-﻿namespace SaveOnCloudApi.Models
+﻿namespace SaveOnCloud.Web.Models
 {
     public class Settings
     {

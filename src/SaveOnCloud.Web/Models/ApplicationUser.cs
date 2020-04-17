@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SaveOnCloudApi.Models
+namespace SaveOnCloud.Web.Models
 {
     public class ApplicationUser : IdentityUser
     {

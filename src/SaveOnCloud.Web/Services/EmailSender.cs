@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using MimeKit;
 using MailKit.Security;
-using SaveOnCloudApi.Models;
+using SaveOnCloud.Web.Models;
 using Microsoft.Extensions.Logging;
 
-namespace SaveOnCloudApi.Services
+namespace SaveOnCloud.Web.Services
 {
     public class EmailSender : IEmailSender
     {

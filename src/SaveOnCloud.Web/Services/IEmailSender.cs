@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SaveOnCloudApi.Services
+namespace SaveOnCloud.Web.Services
 {
     public interface IEmailSender
     {

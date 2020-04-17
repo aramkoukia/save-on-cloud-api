@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SaveOnCloudApi.Models.Azure
+namespace SaveOnCloud.Web.Models.Azure
 {
     public class CreateSubscriptionModel
     {

@@ -6,7 +6,7 @@ using Microsoft.Azure.Management.Billing;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Billing.Models;
 
-namespace SaveOnCloudApi.Controllers.Azure
+namespace SaveOnCloud.Web.Controllers.Azure
 {
     [Route("azure/[controller]")]
     [ApiController]

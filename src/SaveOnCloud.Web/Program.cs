@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace SaveOnCloudApi
+namespace SaveOnCloud.Web
 {
     public class Program
     {

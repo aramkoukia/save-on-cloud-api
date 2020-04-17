@@ -1,4 +1,4 @@
-﻿namespace SaveOnCloudApi.Models.Auth
+﻿namespace SaveOnCloud.Web.Models.Auth
 {
     public class EmailConfirmModel
     {

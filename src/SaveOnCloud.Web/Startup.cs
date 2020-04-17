@@ -8,11 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SaveOnCloudApi.Models;
-using SaveOnCloudApi.Services;
+using SaveOnCloud.Web.Models;
+using SaveOnCloud.Web.Services;
 using System.Text;
 
-namespace SaveOnCloudApi
+namespace SaveOnCloud.Web
 {
     public class Startup
     {
