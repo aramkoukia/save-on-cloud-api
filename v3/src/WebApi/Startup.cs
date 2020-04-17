@@ -69,13 +69,6 @@ namespace WebApi
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                }).UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "ClientApp";
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer(npmScript: "start");
-                    }
                 });
         }
     }
