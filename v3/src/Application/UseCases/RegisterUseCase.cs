@@ -1,7 +1,3 @@
-// <copyright file="Register.cs" company="Ivan Paulovich">
-// Copyright © Ivan Paulovich. All rights reserved.
-// </copyright>
-
 namespace Application.UseCases
 {
     using System.Linq;
@@ -16,12 +12,7 @@ namespace Application.UseCases
     using Services;
 
     /// <summary>
-    ///     Register
-    ///     <see href="https://github.com/ivanpaulovich/clean-architecture-manga/wiki/Domain-Driven-Design-Patterns#use-case">
-    ///         Use
-    ///         Case Domain-Driven Design Pattern
-    ///     </see>
-    ///     .
+    /// 
     /// </summary>
     public sealed class RegisterUseCase : IUseCase
     {

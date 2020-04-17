@@ -1,7 +1,3 @@
-// <copyright file="GetAccountDetails.cs" company="Ivan Paulovich">
-// Copyright © Ivan Paulovich. All rights reserved.
-// </copyright>
-
 namespace Application.UseCases
 {
     using System.Threading.Tasks;
@@ -9,12 +5,7 @@ namespace Application.UseCases
     using Domain.Accounts;
 
     /// <summary>
-    ///     Get Account Details
-    ///     <see href="https://github.com/ivanpaulovich/clean-architecture-manga/wiki/Domain-Driven-Design-Patterns#use-case">
-    ///         Use
-    ///         Case Domain-Driven Design Pattern
-    ///     </see>
-    ///     .
+    /// 
     /// </summary>
     public sealed class GetAccountDetailsUseCase : IUseCase, IUseCaseV2
     {

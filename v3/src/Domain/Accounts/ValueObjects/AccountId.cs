@@ -1,18 +1,9 @@
-// <copyright file="AccountId.cs" company="Ivan Paulovich">
-// Copyright © Ivan Paulovich. All rights reserved.
-// </copyright>
-
 namespace Domain.Accounts.ValueObjects
 {
     using System;
 
     /// <summary>
-    ///     AccountId
-    ///     <see href="https://github.com/ivanpaulovich/clean-architecture-manga/wiki/Domain-Driven-Design-Patterns#entity">
-    ///         Entity
-    ///         Design Pattern
-    ///     </see>
-    ///     .
+    /// 
     /// </summary>
     public readonly struct AccountId : IEquatable<AccountId>
     {
