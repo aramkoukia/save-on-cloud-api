@@ -9,3 +9,4 @@ Release
 *.pubxml*
 *.csproj.user
 appsettings.json
+/v3/tools/.store
