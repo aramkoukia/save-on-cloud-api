@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Aws\" />
-    <Folder Include="Models\Azure\" />
     <Folder Include="Models\Aws\" />
   </ItemGroup>
 </Project>

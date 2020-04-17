@@ -9,11 +9,11 @@ namespace SaveOnCloudApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubscriptionController : ControllerBase
+    public class PaymentController : ControllerBase
     {
         public IConfiguration Configuration { get; }
 
-        public SubscriptionController(IConfiguration configuration) => Configuration = configuration;
+        public PaymentController(IConfiguration configuration) => Configuration = configuration;
 
         [AllowAnonymous]
         [HttpPost]

@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SaveOnCloudApi.Controllers
 {
+    [Route("[controller]")]
     public class AuthController : Controller
     {
         public IConfiguration Configuration { get; }
@@ -45,7 +46,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("auth/login")]
+        [HttpPost("login")]
         [Produces("application/json")]
         public async Task<IActionResult> Login(string email, string password)
         {
@@ -113,7 +114,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("auth/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegistrationModel model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -145,7 +146,7 @@ namespace SaveOnCloudApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("auth/confirm")]
+        [HttpPost("confirm")]
         public async Task<IActionResult> ConfirmAsync(EmailConfirmModel model)
         {
             var user = new ApplicationUser { Id = model.UserId };
