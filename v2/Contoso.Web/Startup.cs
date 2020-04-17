@@ -16,6 +16,7 @@ using MediatR;
 using SaveOnCloud.Application.Students.Queries;
 using SaveOnCloud.Core.Interfaces.Repositories;
 using SaveOnCloud.Infrastructure.Data.Repositories;
+using SaveOnCloud.Infrastructure.Data.Repositories.Azure;
 
 namespace SaveOnCloud.Web
 {
@@ -75,6 +76,7 @@ namespace SaveOnCloud.Web
             services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<IOfficeAssignmentRepository, OfficeAssignmentRepository>();
             services.AddScoped<ICourseAssignmentRepository, CourseAssignmentRepository>();
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();

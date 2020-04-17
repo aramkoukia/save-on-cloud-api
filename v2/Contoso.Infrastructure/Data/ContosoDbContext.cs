@@ -1,6 +1,7 @@
 ﻿using Ardalis.EFCore.Extensions;
 using SaveOnCloud.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using SaveOnCloud.Core.Domain.Azure;
 
 namespace SaveOnCloud.Infrastructure.Data
 {
@@ -10,6 +11,7 @@ namespace SaveOnCloud.Infrastructure.Data
             : base(options) { }
 
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<CourseAssignment> CourseAssignments { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }

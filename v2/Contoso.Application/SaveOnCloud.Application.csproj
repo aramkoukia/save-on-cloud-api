@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,6 +10,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contoso.Core\SaveOnCloud.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Azure\Subscriptions\Queries\" />
+    <Folder Include="Organizations\Commands\" />
+    <Folder Include="Organizations\Queries\" />
   </ItemGroup>
 
 </Project>
