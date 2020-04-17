@@ -8,8 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SaveOnCloud.Web.Models;
-using SaveOnCloud.Web.Services;
+using SaveOnCloud.Core.Entities;
+using SaveOnCloud.Core.Services;
+using SaveOnCloud.Infrastructure.Data;
+using SaveOnCloud.SharedKernel;
+using SaveOnCloud.SharedKernel.Interfaces;
 using System.Text;
 
 namespace SaveOnCloud.Web
@@ -25,12 +28,12 @@ namespace SaveOnCloud.Web
         {
             services.AddControllers();
 
-            services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
             // Configure Entity Framework Identity for Auth
             services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationContext>()
+            .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
             services.AddSwaggerGen(c =>

@@ -3,17 +3,18 @@ using System.IO;
 using System.Linq;
 using MimeKit;
 using MailKit.Security;
-using SaveOnCloud.Web.Models;
 using Microsoft.Extensions.Logging;
+using SaveOnCloud.Infrastructure.Data;
+using SaveOnCloud.SharedKernel.Interfaces;
 
-namespace SaveOnCloud.Web.Services
+namespace SaveOnCloud.Core.Services
 {
     public class EmailSender : IEmailSender
     {
-        private readonly ApplicationContext _context;
+        private readonly AppDbContext _context;
         private readonly ILogger _logger;
 
-        public EmailSender(ApplicationContext context, ILoggerFactory loggerFactory)
+        public EmailSender(AppDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<EmailSender>();

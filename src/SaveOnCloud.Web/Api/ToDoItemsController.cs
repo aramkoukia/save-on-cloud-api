@@ -1,9 +1,8 @@
 ﻿using SaveOnCloud.Core.Entities;
 using SaveOnCloud.SharedKernel.Interfaces;
-using SaveOnCloud.Web.ApiModels;
-using SaveOnCloud.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using SaveOnCloud.Web.Models;
 
 namespace SaveOnCloud.Web
 {
@@ -21,7 +20,7 @@ namespace SaveOnCloud.Web
         public IActionResult List()
         {
             var items = _repository.List<ToDoItem>()
-                            .Select(ToDoItemDTO.FromToDoItem);
+                            .Select(ToDoItemModel.FromToDoItem);
             return Ok(items);
         }
 
@@ -29,13 +28,13 @@ namespace SaveOnCloud.Web
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            var item = ToDoItemDTO.FromToDoItem(_repository.GetById<ToDoItem>(id));
+            var item = ToDoItemModel.FromToDoItem(_repository.GetById<ToDoItem>(id));
             return Ok(item);
         }
 
         // POST: api/ToDoItems
         [HttpPost]
-        public IActionResult Post([FromBody] ToDoItemDTO item)
+        public IActionResult Post([FromBody] ToDoItemModel item)
         {
             var todoItem = new ToDoItem()
             {
@@ -43,7 +42,7 @@ namespace SaveOnCloud.Web
                 Description = item.Description
             };
             _repository.Add(todoItem);
-            return Ok(ToDoItemDTO.FromToDoItem(todoItem));
+            return Ok(ToDoItemModel.FromToDoItem(todoItem));
         }
 
         [HttpPatch("{id:int}/complete")]
@@ -53,7 +52,7 @@ namespace SaveOnCloud.Web
             toDoItem.MarkComplete();
             _repository.Update(toDoItem);
 
-            return Ok(ToDoItemDTO.FromToDoItem(toDoItem));
+            return Ok(ToDoItemModel.FromToDoItem(toDoItem));
         }
     }
 }

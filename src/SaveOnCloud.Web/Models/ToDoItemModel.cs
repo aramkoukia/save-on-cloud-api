@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using SaveOnCloud.Core.Entities;
 
-namespace SaveOnCloud.Web.ApiModels
+namespace SaveOnCloud.Web.Models
 {
     // Note: doesn't expose events or behavior
-    public class ToDoItemDTO
+    public class ToDoItemModel
     {
         public int Id { get; set; }
         [Required]
@@ -16,9 +12,9 @@ namespace SaveOnCloud.Web.ApiModels
         public string Description { get; set; }
         public bool IsDone { get; private set; }
 
-        public static ToDoItemDTO FromToDoItem(ToDoItem item)
+        public static ToDoItemModel FromToDoItem(ToDoItem item)
         {
-            return new ToDoItemDTO()
+            return new ToDoItemModel()
             {
                 Id = item.Id,
                 Title = item.Title,

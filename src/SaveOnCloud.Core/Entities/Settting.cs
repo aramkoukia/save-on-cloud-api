@@ -1,8 +1,9 @@
-﻿namespace SaveOnCloud.Web.Models
+﻿using SaveOnCloud.SharedKernel;
+
+namespace SaveOnCloud.Core.Entities
 {
-    public class Settings
+    public class Setting : BaseEntity
     {
-        public int Id { get; set; }
         public string AdminEmail { get; set; }
         public string FromEmail { get; set; }
         public string FromEmailPassword { get; set; }

@@ -10,13 +10,14 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using System.Collections.Generic;
-using SaveOnCloud.Web.Models;
-using SaveOnCloud.Web.Services;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.WebUtilities;
 using SaveOnCloud.Web.Models.Auth;
 using System.Text.Encodings.Web;
 using Microsoft.Extensions.Configuration;
+using SaveOnCloud.Core.Entities;
+using SaveOnCloud.SharedKernel;
+using SaveOnCloud.SharedKernel.Interfaces;
 
 namespace SaveOnCloud.Web.Controllers
 {

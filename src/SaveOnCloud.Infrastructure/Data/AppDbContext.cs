@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using SaveOnCloud.Core.Entities;
 using SaveOnCloud.SharedKernel;
 using Ardalis.EFCore.Extensions;
-using System.Reflection;
-using JetBrains.Annotations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SaveOnCloud.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly IDomainEventDispatcher _dispatcher;
 
@@ -26,6 +25,8 @@ namespace SaveOnCloud.Infrastructure.Data
         }
 
         public DbSet<ToDoItem> ToDoItems { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<AzureAccount> AzureAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

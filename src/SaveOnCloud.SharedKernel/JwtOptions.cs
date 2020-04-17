@@ -1,4 +1,4 @@
-﻿namespace SaveOnCloud.Web.Services
+﻿namespace SaveOnCloud.SharedKernel
 {
     public class JwtOptions
     {

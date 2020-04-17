@@ -1,9 +1,9 @@
 ﻿using SaveOnCloud.Core;
 using SaveOnCloud.Core.Entities;
 using SaveOnCloud.SharedKernel.Interfaces;
-using SaveOnCloud.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using SaveOnCloud.Web.Models;
 
 namespace SaveOnCloud.Web.Controllers
 {
@@ -19,7 +19,7 @@ namespace SaveOnCloud.Web.Controllers
         public IActionResult Index()
         {
             var items = _repository.List<ToDoItem>()
-                            .Select(ToDoItemDTO.FromToDoItem);
+                            .Select(ToDoItemModel.FromToDoItem);
             return View(items);
         }
 
